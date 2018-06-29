@@ -1,0 +1,59 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId,flexipage:availableForAllPageTypes" access="global">
+    <aura:attribute type="Case" name="newCase" default="{ 'sobjectType': 'Case' }" />
+    <aura:attribute name="contact" type="Contact"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="hasErrors" type="Boolean" />
+    <aura:attribute name="message" type="String" />
+
+	<aura:attribute name="contactError" type="String" />
+    <force:recordData aura:id="contactRecordLoader" 
+                         recordId="{!v.recordId}"
+                         fields="Name,AccountId"
+                         targetRecord="{!v.contact}"
+                         targetError="{!v.contactError}" />
+
+    <aura:attribute name="caseError" type="String" />
+    <force:recordData aura:id="caseRecordCreator" 
+                         layoutType="FULL"
+                         targetRecord="{!v.newCase}"
+                         targetError="{!v.caseError}" />
+	
+	
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="slds-page-header" role="banner">
+        <p class="slds-text-heading--label">{!v.contact.Name}</p>
+        <h1 class="slds-page-header__title slds-m-right--small
+            slds-truncate slds-align-left">Create New Case</h1>
+    </div>
+    
+    <aura:if isTrue="{!v.hasErrors}">
+        <div class="recordSaveError">
+            <ui:message title="Error" severity="error" closable="true">
+                An error was encountered trying to save this case.
+                Please review and correct any errors before submitting.
+            </ui:message>
+        </div>
+    </aura:if>
+    
+    <aura:if isTrue="{!not(empty(v.message))}">
+        <div class="recordSaveSuccess">
+            <ui:message >
+                {!v.message}
+            </ui:message>
+        </div>
+    </aura:if>
+
+
+    <div class="slds-form--stacked">
+		<lightning:input required="true" type="input" aura:id="Subject" 
+                         label="Subject:" value="{!v.newCase.Subject}" />
+
+		 <lightning:textArea required="true" aura:id="Descrption" maxlength="1000"
+                          label="Descrption:" value="{!v.newCase.Descrption}" />
+        
+        <br />
+        <lightning:button variant="brand" label="Save Case" onclick="{!c.saveCase}" />
+		
+    </div>
+</aura:component>

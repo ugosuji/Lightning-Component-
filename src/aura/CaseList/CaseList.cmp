@@ -1,0 +1,7 @@
+<aura:component >
+    <aura:attribute name="case" type="Case" />	
+    <div onclick="{!c.goToRecord}">
+            <lightning:outputField fieldName="Subject" />
+            <lightning:outputField fieldName="Description" />
+        </div>
+</aura:component>

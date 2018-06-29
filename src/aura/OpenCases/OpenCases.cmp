@@ -1,0 +1,27 @@
+<aura:component controller="OpenCasesControllerApex" >
+    <aura:attribute name ="cases" type="Case[]" />
+    <aura:handler name ="init" value="{!this}" action ="{!c.doInit}" />
+    <body>
+        <aura:iteration items="{!v.cases}" var="case">
+          
+            
+    <lightning:recordViewForm recordId="{!case.Id}" >
+        <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-3">
+         <span>  <lightning:outputField fieldName="Subject" /> <br></br>
+            </span>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+            <lightning:outputField fieldName="Priority" /> <br></br>
+        </div> 
+        <div class="slds-col slds-size_1-of-3">
+           <lightning:outputField fieldName="Origin" />
+        </div> <br></br>
+    </div>
+        
+      
+    </lightning:recordViewForm>
+        
+    </aura:iteration>
+    </body>
+</aura:component>
